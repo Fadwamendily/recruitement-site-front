@@ -13,33 +13,27 @@ import {
 import { Typography } from 'antd';
 import { useDispatch } from 'react-redux'
 import { createentreprise, selectregisterstatus } from '../features/entreprises/entrepriseSlice'
-import { createcandidat, selectregisterCandidatStatus } from '../features/candidats/candidatSlice';
+import { createcandidat, getAllcandidat, selectregisterCandidatStatus } from '../features/candidats/candidatSlice';
 import { useSelector } from 'react-redux'
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useEffect } from 'react'
-
-
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
 const { Title } = Typography;
-
 const { TextArea } = Input;
 const { Option } = Select;
 
-
 const Register = (props) => {
 
+    useEffect(() => {
+        dispatch(getAllcandidat())
+    }, [])
+
     const [actor, setactor] = useState('')
-
     const [form] = Form.useForm();
-
     const dispatch = useDispatch()
-
     const registercompanystatus = useSelector(selectregisterstatus)
     const registercandidatstatus = useSelector(selectregisterCandidatStatus)
-
-
     const Candidatform = () => {
 
         const onFinish = (values) => {
@@ -266,8 +260,6 @@ const Register = (props) => {
 
         )
     }
-
-
     const CompanyForm = () => {
 
         const onFinish = (values) => {
@@ -283,9 +275,6 @@ const Register = (props) => {
             }
             dispatch(createentreprise(data))
         };
-
-
-
         return (
             <>
                 {registercompanystatus === 'success' ?
@@ -480,13 +469,11 @@ const Register = (props) => {
 
         )
     }
-
-
     return (
         <div className='registerform'>
             {actor === '' && <Row>
                 <Col span={24} >
-                    <span className='spanf' style={{ display: 'flex', justifyContent: 'center' }} >
+                    <span className='spanf' style={{ display: 'flex', justifyContent: 'center',marginTop: '100px'}}  >
                         Vous êtes ?
                     </span>
                 </Col>

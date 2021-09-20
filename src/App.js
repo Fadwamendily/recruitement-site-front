@@ -10,6 +10,8 @@ import PrivateRoute from './components/PrivateRoute';
 import Admin from './pages/boards/adminboard/Admin';
 import Condidat from './pages/boards/condidateboard/Condidat';
 import Employer from './pages/boards/employerboard/Employer';
+import { GetAllCandidat } from './features/candidats/candidatAPI';
+import Offres from './components/offres/Offres';
 
 function App() {
   return (
@@ -24,10 +26,14 @@ function App() {
           <PrivateRoute path="/admin" roles={["admin"]} component={Admin} />
           <PrivateRoute path="/condidat" roles={["condidat"]} component={Condidat} />
           <PrivateRoute path="/entreprise" roles={["entreprise"]} component={Employer} />
+          <PrivateRoute path="/offres" roles={["entreprise", "admin", "condidat"]} component={Offres} />
           <PublicRoute path="/login" restricted={true} component={Login} />
           <PublicRoute path="/register" restricted={true} component={Register} />
+          <PublicRoute path="/getAllcandidats" restricted={true} component={GetAllCandidat} />
 
-          {/* <PublicRoute path="/" restricted={false} component={Landing} /> */}
+          <PublicRoute exact path="/" restricted={false} component={Landing} />
+          {/*           restrictred true ki yconnecti ma3ach yarja3 lpage login
+ */}
 
         </Switch>
       </Router>

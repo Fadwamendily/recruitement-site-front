@@ -1,14 +1,10 @@
 import { Alert } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useSelector ,useDispatch} from 'react-redux'
 import { useHistory } from 'react-router'
 import '../assets/css/login.css'
 import abcd from '../assets/img/abcd.png'
 import { login, selectautheduser, selectloginstatus } from '../features/users/userSlice'
-
-
-
 const Login = (props) => {
 
 
@@ -20,6 +16,7 @@ const Login = (props) => {
 
     const status = useSelector(selectloginstatus)
     const user = useSelector(selectautheduser)
+    
     const singin = () => {
         let data = {
             email: email,
@@ -99,3 +96,4 @@ const Login = (props) => {
 }
 
 export default Login
+

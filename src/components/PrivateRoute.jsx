@@ -5,8 +5,9 @@ import { selectautheduser, selectisauth } from '../features/users/userSlice';
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
 
-    const isauth = useSelector(selectisauth)
-    const user = useSelector(selectautheduser)
+    const isauth = localStorage.getItem('isauth')
+    const role = localStorage.getItem('role')
+
     return (
         <Route {...rest} render={props => {
             if (!isauth)
@@ -15,13 +16,13 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
                     state: { from: props.location }
                 }} />
 
-            if (!roles.includes(user.__t))
+            if (!roles.includes(role))
 
                 return <Redirect to={{
                     pathname: '/',
-                    state: { from: props.location }
+                    state: { from: props.location } //////// ????
                 }} />
-            return <Component {...props} />
+            return <Component {...props} />    ////// ????
         }} />
     )
 }

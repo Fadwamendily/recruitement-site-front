@@ -9,16 +9,15 @@ import { selectautheduser } from '../../../features/users/userSlice'
 
 const Navigation = (props) => {
 
-    
+
 
     return (
-        <div class='navigation'  >
-            
-                {props.children}
+        <div class='navigation  '  >
 
-                < NavItem role='admin'  {...props} icon={MdWork} text='Offres' />
-                < NavItem role='entreprise' {...props} icon={ImUserTie} text='Condidates' />
-                < NavItem role='condidat' {...props} icon={RiSettings2Fill} text='settings' />
+            {props.children}
+
+            < NavItem roles={['admin', 'entreprise', 'condidat']} {...props} url='offres' icon={MdWork} text='Offres' />
+
 
         </div>
     )

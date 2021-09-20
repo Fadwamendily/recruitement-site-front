@@ -11,3 +11,12 @@ export function CreateCandidat(data) {
             return err
         })
 }
+export function GetAllCandidat() {
+    return axios.get(requests.candidatapi+'/allcondidat')
+        .then(res => {
+            return res
+        })
+        .catch(err => {
+            return err
+        })
+}

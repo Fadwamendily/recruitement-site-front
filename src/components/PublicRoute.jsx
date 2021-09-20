@@ -5,23 +5,25 @@ import { selectautheduser, selectisauth } from '../features/users/userSlice';
 
 function PublicRoute({ component: Component, restricted, ...rest }) {
 
-    const isauth = useSelector(selectisauth)
-    const user = useSelector(selectautheduser)
+    const isauth = localStorage.getItem('isauth')
+    const role = localStorage.getItem('role')
     return (
         <Route {...rest} render={props => (
+            
             isauth && restricted ?
                 <Redirect to={
 
-                    user.__t === 'entreprise' && '/entreprise'
+                    role === 'entreprise' && '/entreprise'
                     ||
-                    user.__t === 'admin' && '/admin'
+                    role === 'admin' && '/admin'
                     ||
-                    user.__t === 'condidat' && '/condidat'
+                    role === 'condidat' && '/condidat'
                     ||
-                    !user && '/'
+                    role && '/'
                 } />
-                : <Component {...props} />
+                : <Component {...props} /> ///////// ?????
         )} />
+        
     )
 }
 

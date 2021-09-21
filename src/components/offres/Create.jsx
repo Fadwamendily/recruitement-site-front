@@ -11,72 +11,87 @@ import {
     TreeSelect,
     Switch,
 } from 'antd';
+import { createOffre, selectcreateoffrestatus } from '../../features/offres/offreEmploiSlice';
+import { useDispatch, useSelector } from 'react-redux';
+const Create = (props) => {
 
-const Create = () => {
-    const [componentSize, setComponentSize] = useState('default');
 
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);
+    const dispatch = useDispatch()
+    const createoffrestatus = useSelector(selectcreateoffrestatus)
+    const onFinish = (values) => {
+        console.log('Received values of form: ', values);
+
+
+        dispatch(createOffre(values))
     };
+
     return (
         <div>
             <Form
-                labelCol={{
-                    span: 4,
+                name="basic"
+                labelCol={{//////////espace label
+                    span: 6,
                 }}
                 wrapperCol={{
-                    span: 14,
+                    span: 16,
                 }}
                 layout="horizontal"
-                initialValues={{
-                    size: componentSize,
-                }}
-                onValuesChange={onFormLayoutChange}
-                size={componentSize}
+                onFinish={onFinish}
             >
-                <Form.Item label="Poste">
+                <Form.Item rules={[{ required: true, message: 'Please input poste!' }]} name='poste' label="Poste">
                     <Input />
                 </Form.Item>
-                <Form.Item label="Description">
+                <Form.Item rules={[{ required: true, message: 'Please input description!' }]} name='description' label="Description">
                     <Input />
                 </Form.Item>
-                <Form.Item label="Type de contrat">
+                <Form.Item  rules={[{ required: true, message: 'Please choose contrat type!' }]}name='type_contrat' label="Type_de_contrat">
                     <Select>
-                        <Select.Option value="demo">CDI</Select.Option>
-                        <Select.Option value="demo">CDD</Select.Option>
-                        <Select.Option value="demo">CIVP</Select.Option>
-                        <Select.Option value="demo">KARAMA</Select.Option>
+                        <Select.Option value="CDI" >CDI</Select.Option>
+                        <Select.Option value="CDD">CDD</Select.Option>
+                        <Select.Option value="CIVP" >CIVP</Select.Option>
+                        <Select.Option value="KARAMA" >KARAMA</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item label="Catégorie">
+                <Form.Item  rules={[{ required: true, message: 'Please choose a category!' }]} name='categorie' label="Catégorie">
                     <Select>
-                        <Select.Option value="demo">Informatique</Select.Option>
-                        <Select.Option value="demo">Ingénierie</Select.Option>
-                        <Select.Option value="demo">Education</Select.Option>
-                        <Select.Option value="demo">Artisanat</Select.Option>
+                        <Select.Option value="Informatique">Informatique</Select.Option>
+                        <Select.Option value="Ingénierie">Ingénierie</Select.Option>
+                        <Select.Option value="Education">Education</Select.Option>
+                        <Select.Option value="Artisanat">Artisanat</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item label="Catégorie">
+                <Form.Item  rules={[{ required: true, message: 'Please choose a place!' }]} name='lieu' label="Lieu">
                     <Select>
-                        <Select.Option value="demo">Ariana</Select.Option>
-                        <Select.Option value="demo">Beja</Select.Option>
-                        <Select.Option value="demo">Ben Arous</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
-                        <Select.Option value="demo">Bizerte</Select.Option>
+                        <Select.Option value="Ariana">Ariana</Select.Option>
+                        <Select.Option value="Beja">Beja</Select.Option>
+                        <Select.Option value="Ben Arous">Ben Arous</Select.Option>
+                        <Select.Option value="Bizerte">Bizerte</Select.Option>
+                        <Select.Option value="Gabès">Gabès</Select.Option>
+                        <Select.Option value="Gafsa">Gafsa</Select.Option>
+                        <Select.Option value="Jendouba">Jendouba</Select.Option>
+                        <Select.Option value="Kairouan">Kairouan</Select.Option>
+                        <Select.Option value="Kébili">Kébili</Select.Option>
+                        <Select.Option value="Le Kef">Le Kef</Select.Option>
+                        <Select.Option value="Mahdia">Mahdia</Select.Option>
+                        <Select.Option value="La Manouba">La Manouba</Select.Option>
+                        <Select.Option value="Médenine">Médenine</Select.Option>
+                        <Select.Option value="Monastir">Monastir</Select.Option>
+                        <Select.Option value="Nabeul">Nabeul</Select.Option>
+                        <Select.Option value="Sfax">Sfax</Select.Option>
+                        <Select.Option value="Sidi Bouzid">Sidi Bouzid</Select.Option>
+                        <Select.Option value="Siliana">Siliana</Select.Option>
+                        <Select.Option value="Sousse">Sousse</Select.Option>
+                        <Select.Option value="Tataouine">Tataouine</Select.Option>
+                        <Select.Option value="Tozeur">Tozeur</Select.Option>
+                        <Select.Option value="Tunis">Tunis</Select.Option>
+                        <Select.Option value="Zaghouan">Zaghouan</Select.Option>
                     </Select>
                 </Form.Item>
-             
-                <Form.Item label="Confirmer la création de l'offre">
-                    <Button>Créer</Button>
+
+                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
                 </Form.Item>
             </Form>
         </div>

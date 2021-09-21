@@ -1,9 +1,10 @@
 import { Col, Row } from 'antd'
 import React from 'react'
-import { Switch ,Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Navigation from '../../pages/boards/navigation/Navigation'
 import Sider from './Sider'
-import {useParams, useRouteMatch} from 'react-router'
+import { useParams, useRouteMatch } from 'react-router'
+import Create from './Create'
 
 const Offres = () => {
 
@@ -50,10 +51,10 @@ function Topic() {
     // of the URL indicates a placeholder that we can
     // get from `useParams()`.
     let { topicId } = useParams();
-    
-    return (
-      <div>
-        <h3>{topicId}</h3>
-      </div>
-    );
-  }
+
+    switch (topicId) {
+        case 'create': return <Create />; break;
+
+        default: return <p>home oofres</p>; break;
+    }
+}

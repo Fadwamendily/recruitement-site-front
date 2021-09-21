@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import '../assets/css/Navbar.css'
@@ -7,7 +7,9 @@ import { selectisauth } from '../features/users/userSlice'
 const Navbar = () => {
 
 
-    const isauth = useSelector(selectisauth)
+/*     const isauth = useSelector(selectisauth)
+ */
+    const [isauth, setisauth] = useState(localStorage.getItem('isauth'))
 
     return (
         <div>

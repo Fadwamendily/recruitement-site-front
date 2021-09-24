@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Landing from './pages/Landing';
 import Navbar from './pages/Navbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -12,8 +12,19 @@ import Condidat from './pages/boards/condidateboard/Condidat';
 import Employer from './pages/boards/employerboard/Employer';
 import { GetAllCandidat } from './features/candidats/candidatAPI';
 import Offres from './components/offres/Offres';
+import { useDispatch } from 'react-redux';
+import { getallcategories } from './features/categories/categoriesSlice';
+import Profile from './components/profile/Profile';
 
 function App() {
+
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+     dispatch(getallcategories())
+    }, [])
+    
+
   return (
     <div>
       <Router>
@@ -24,8 +35,9 @@ function App() {
 
 
           <PrivateRoute path="/admin" roles={["admin"]} component={Admin} />
-          <PrivateRoute path="/condidat" roles={["condidat"]} component={Condidat} />
+          <PrivateRoute path="/condidat" roles={["condidat"]} component={Employer} />
           <PrivateRoute path="/entreprise" roles={["entreprise"]} component={Employer} />
+          <PrivateRoute path="/profile" roles={["entreprise","admin" , "condidat"]} component={Profile} />
           <PrivateRoute path="/offres" roles={["entreprise", "admin", "condidat"]} component={Offres} />
           <PublicRoute path="/login" restricted={true} component={Login} />
           <PublicRoute path="/register" restricted={true} component={Register} />

@@ -1,50 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Form,
     Input,
     Button,
-    Radio,
     Select,
-    Cascader,
-    DatePicker,
-    InputNumber,
-    TreeSelect,
-    Switch,
+    Alert,
 } from 'antd';
 import { createOffre, selectcreateoffrestatus } from '../../features/offres/offreEmploiSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectcategories } from '../../features/categories/categoriesSlice';
+import { selectuser } from '../../features/users/userSlice';
 const Create = (props) => {
 
 
     const dispatch = useDispatch()
     const createoffrestatus = useSelector(selectcreateoffrestatus)
+
+    const categories = useSelector(selectcategories)
+    const [form] = Form.useForm();
+    const [displayform, setdisplayform] = useState(true)
+    const [dispalysucessalert, setdispalysucessalert] = useState(false)
+    const user = useSelector(selectuser)
+
+    useEffect(() => {
+        if (createoffrestatus === 'success') {
+            setdispalysucessalert(true)
+            onReset()
+            setTimeout(() => {
+                setdispalysucessalert(false)
+
+            }, 3000);
+        }
+
+
+
+    }, [createoffrestatus])
+
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
-
-
+        values.entreprise = user._id
         dispatch(createOffre(values))
+    };
+
+    const onReset = () => {
+        form.resetFields();
     };
 
     return (
         <div>
+
             <Form
-                name="basic"
-                labelCol={{//////////espace label
-                    span: 6,
-                }}
-                wrapperCol={{
-                    span: 16,
-                }}
-                layout="horizontal"
+                style={{ margin: '0 15px' }}
+                layout='vertical'
+                form={form}
                 onFinish={onFinish}
             >
+                {dispalysucessalert && <Alert style={{ marginBottom: "10px" }} message="Success Tips" type="success" showIcon />}
+
                 <Form.Item rules={[{ required: true, message: 'Please input poste!' }]} name='poste' label="Poste">
                     <Input />
                 </Form.Item>
                 <Form.Item rules={[{ required: true, message: 'Please input description!' }]} name='description' label="Description">
                     <Input />
                 </Form.Item>
-                <Form.Item  rules={[{ required: true, message: 'Please choose contrat type!' }]}name='type_contrat' label="Type_de_contrat">
+                <Form.Item rules={[{ required: true, message: 'Please choose contrat type!' }]} name='type_contrat' label="Type_de_contrat">
                     <Select>
                         <Select.Option value="CDI" >CDI</Select.Option>
                         <Select.Option value="CDD">CDD</Select.Option>
@@ -52,15 +71,19 @@ const Create = (props) => {
                         <Select.Option value="KARAMA" >KARAMA</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item  rules={[{ required: true, message: 'Please choose a category!' }]} name='categorie' label="Catégorie">
+                <Form.Item rules={[{ required: true, message: 'Please choose a category!' }]} name='categorie' label="Catégorie">
                     <Select>
-                        <Select.Option value="Informatique">Informatique</Select.Option>
-                        <Select.Option value="Ingénierie">Ingénierie</Select.Option>
-                        <Select.Option value="Education">Education</Select.Option>
-                        <Select.Option value="Artisanat">Artisanat</Select.Option>
+                        {
+                            categories.map((c, i) => {
+                                return (
+                                    <Select.Option value={c._id}>{c.nom_categorie}</Select.Option>
+
+                                )
+                            })
+                        }
                     </Select>
                 </Form.Item>
-                <Form.Item  rules={[{ required: true, message: 'Please choose a place!' }]} name='lieu' label="Lieu">
+                <Form.Item rules={[{ required: true, message: 'Please choose a place!' }]} name='lieu' label="Lieu">
                     <Select>
                         <Select.Option value="Ariana">Ariana</Select.Option>
                         <Select.Option value="Beja">Beja</Select.Option>

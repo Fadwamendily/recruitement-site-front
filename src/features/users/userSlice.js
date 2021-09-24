@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Login } from './userAPI';
+import { Login, updateUser, uploadAvatar } from './userAPI';
 
 const initialState = {
     loginstatus: {
@@ -10,22 +10,39 @@ const initialState = {
 
     ,
     isauth: false,
-    autheduser: null
+    autheduser: null,
+    user: null,
+    avatarstatus: '',
+    updatestatus:''
 };
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched. Thunks are
-// typically used to make async requests.
 
 export const login = createAsyncThunk(
-    'users/login', ///nom de l'action redux
-    async(data) => {
+    'users/login',
+    async (data) => {
         const response = await Login(data);
         // The value we return becomes the `fulfilled` action payload
         return response;
     }
 );
+
+// uploadd user avatar redux action
+export const uploadavatar = createAsyncThunk(
+    'users/avatar',
+    async (data) => {
+        const response = await uploadAvatar(data);
+        // The value we return becomes the `fulfilled` action payload
+        return response;
+    }
+);
+//update user
+export const updateuser=createAsyncThunk(
+    'users/updateUser',
+    async (data) => {
+        const response = await updateUser(data);
+        // The value we return becomes the `fulfilled` action payload
+        return response;
+    } 
+)
 
 export const userSlice = createSlice({
     name: 'users',
@@ -48,9 +65,10 @@ export const userSlice = createSlice({
 
 
                     state.loginstatus.status = 'success'
+                    state.isauth = true
                     localStorage.setItem('isauth', true)
                     localStorage.setItem('role', action.payload.data.user.__t)
-                    state.isauth = true
+                    state.user = action.payload.data.user
                     state.autheduser = action.payload.data.user
                 } else {
 
@@ -64,16 +82,50 @@ export const userSlice = createSlice({
             })
             .addCase(login.rejected, (state, action) => {
                 state.loginstatus.status = 'failure'
-            });
+            })
+
+            /// upload avaytar
+            .addCase(uploadavatar.pending, (state, action) => {
+                state.avatarstatus = 'loading'
+            })
+            .addCase(uploadavatar.fulfilled, (state, action) => {
+                console.log(action.payload);
+
+                if (action.payload.data) {
+                    state.avatarstatus = 'success'
+                    state.user = action.payload.data.data
+                } else {
+                    state.avatarstatus = 'failure'
+
+                }
+
+            })
+            .addCase(uploadavatar.rejected, (state, action) => {
+
+            })
+            .addCase(updateuser.pending, (state, action) => {
+                state.updatestatus = 'loading'
+            })
+            .addCase(updateuser.fulfilled, (state, action) => {
+                console.log(action.payload);
+                state.updatestatus = 'success'
+
+            })
+            .addCase(updateuser.rejected, (state, action) => {
+                state.updatestatus = 'failure'
+
+            })
     },
 });
 
-export const {} = userSlice.actions;
+export const { } = userSlice.actions;
 
 
 export const selectloginstatus = (state) => state.users.loginstatus;
 export const selectisauth = (state) => state.users.isauth;
 export const selectautheduser = (state) => state.users.autheduser;
+export const selectuser = (state) => state.users.user;
+export const selectupdatestatus = (state) => state.users.updatestatus;
 
 
 export default userSlice.reducer;

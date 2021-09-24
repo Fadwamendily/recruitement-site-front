@@ -1,14 +1,26 @@
 import { Col, Row } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Navigation from '../../pages/boards/navigation/Navigation'
 import Sider from './Sider'
 import { useParams, useRouteMatch } from 'react-router'
 import Create from './Create'
+import { useDispatch, useSelector } from 'react-redux'
+import { getaaloffres, selectofres } from '../../features/offres/offreEmploiSlice'
+import OffreItem from './OffreItem'
 
 const Offres = () => {
 
     let { path, url } = useRouteMatch();
+
+
+    const dispatch = useDispatch()
+
+    const offres = useSelector(selectofres)
+
+    useEffect(() => {
+        dispatch(getaaloffres())
+    }, [])
 
     return (
         <div class='main-content'  >
@@ -24,7 +36,15 @@ const Offres = () => {
                     <Col span={14} >
                         <Switch>
                             <Route exact path={path}>
-                                <h3>Please select a topic.</h3>
+
+                                {
+                                    offres.map((o, i) => {
+                                        return (
+                                            <OffreItem offre={o} />
+                                        )
+                                    })
+                                }
+
                             </Route>
                             <Route path={`${path}/:topicId`}>
                                 <Topic />

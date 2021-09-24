@@ -2,9 +2,11 @@
     display: flex;
     position: fixed;
     width: 100%;
-    margin-top: 150px;
+    margin-top: 140px;
     padding-left: 50px;
     padding-right: 50px;
+    background: white;
+    z-index: 457;
 }
 
 .navigationitem {
@@ -22,3 +24,5 @@
     font-size: 20px;
     color: rgb(78, 173, 236);
 }
+
+

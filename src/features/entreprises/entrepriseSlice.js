@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { CreateEntreprise } from './entrepriseAPI';
+import { CreateEntreprise,UpdateComapny } from './entrepriseAPI';
 
 const initialState = {
     registerstatus: ''
@@ -13,6 +13,17 @@ export const createentreprise = createAsyncThunk(
         return response.data;
     }
 );
+
+
+export const updateentreprise = createAsyncThunk(
+    'entreprise/update',
+    async (data) => {
+        const response = await UpdateComapny(data);
+        // The value we return becomes the `fulfilled` action payload
+        return response.data;
+    }
+);
+
 
 export const entrepriseSlice = createSlice({
     name: 'entreprises',
@@ -43,7 +54,29 @@ export const entrepriseSlice = createSlice({
             })
             .addCase(createentreprise.rejected, (state, action) => {
                 state.registerstatus = 'failure'
-            });
+            })
+
+            // 
+            .addCase(updateentreprise.pending, (state) => {
+            })
+            .addCase(updateentreprise.fulfilled, (state, action) => {
+
+                console.log(action.payload);
+
+
+               /*  if (action.payload.status === 200) {
+
+                    state.registerstatus = 'success'
+                } else {
+                    state.registerstatus = 'failure'
+
+                } */
+
+
+            })
+            .addCase(updateentreprise.rejected, (state, action) => {
+               /*  state.registerstatus = 'failure' */
+            })
     },
 });
 

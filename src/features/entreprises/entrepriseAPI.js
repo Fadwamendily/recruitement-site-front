@@ -11,3 +11,14 @@ export function CreateEntreprise(data) {
             return err
         })
 }
+
+export function UpdateComapny(data) {
+    return axios.put(requests.entrepriseapi+'/updateentreprisebyid/' + data.id, data.data)
+        .then(res => {
+            return res
+        })
+        .catch(err => {
+            return err
+        })
+}
+

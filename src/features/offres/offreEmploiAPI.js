@@ -11,3 +11,13 @@ export function CreateOffreEmploi(data) {
             return err
         })
 }
+
+export function GetALl() {
+    return axios.get(requests.offreEmploiapi + '/alloffreEmploi')
+        .then(res => {
+            return res
+        })
+        .catch(err => {
+            return err
+        })
+}

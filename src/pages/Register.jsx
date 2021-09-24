@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux'
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useEffect } from 'react'
+import { selectcategories } from '../features/categories/categoriesSlice';
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -34,6 +35,7 @@ const Register = (props) => {
     const dispatch = useDispatch()
     const registercompanystatus = useSelector(selectregisterstatus)
     const registercandidatstatus = useSelector(selectregisterCandidatStatus)
+    const categories = useSelector(selectcategories)
     const Candidatform = () => {
 
         const onFinish = (values) => {
@@ -145,20 +147,25 @@ const Register = (props) => {
 
                             <Col span={8}  >
                                 <Form.Item
-                                    name="spécialité"
-                                    label="specialite"
+                                    name="categorie"
+                                    label="categorie"
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your specialite!',
+                                            message: 'Please input your category!',
                                         },
                                     ]}
                                     hasFeedback
                                 >
-                                    <Select defaultValue="informatique">
-                                        <Option value="informatique">informatique</Option>
-                                        <Option value="electrique">electrique</Option>
-                                        <Option value="education">education</Option>
+                                    <Select>
+                                        {
+                                            categories.map((c, i) => {
+                                                return (
+                                                    <Select.Option value={c._id}>{c.nom_categorie}</Select.Option>
+
+                                                )
+                                            })
+                                        }
                                     </Select>
                                 </Form.Item>
                             </Col>
@@ -354,20 +361,25 @@ const Register = (props) => {
 
                             <Col span={8}  >
                                 <Form.Item
-                                    name="spécialité"
-                                    label="specialite"
+                                    name="categorie"
+                                    label="categorie"
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your specialite!',
+                                            message: 'Please input your category!',
                                         },
                                     ]}
                                     hasFeedback
                                 >
-                                    <Select defaultValue="informatique">
-                                        <Option value="informatique">informatique</Option>
-                                        <Option value="electrique">electrique</Option>
-                                        <Option value="education">education</Option>
+                                    <Select>
+                                        {
+                                            categories.map((c, i) => {
+                                                return (
+                                                    <Select.Option value={c._id}>{c.nom_categorie}</Select.Option>
+
+                                                )
+                                            })
+                                        }
                                     </Select>
                                 </Form.Item>
                             </Col>
@@ -473,7 +485,7 @@ const Register = (props) => {
         <div className='registerform'>
             {actor === '' && <Row>
                 <Col span={24} >
-                    <span className='spanf' style={{ display: 'flex', justifyContent: 'center',marginTop: '100px'}}  >
+                    <span className='spanf' style={{ display: 'flex', justifyContent: 'center', marginTop: '100px' }}  >
                         Vous êtes ?
                     </span>
                 </Col>

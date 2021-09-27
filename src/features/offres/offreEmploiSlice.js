@@ -3,7 +3,8 @@ import { CreateOffreEmploi, GetALl } from './offreEmploiAPI';
 
 const initialState = {
     createoffrestatus: '',
-    offres: []
+    offres: [],
+    singleoffre: null
 };
 
 export const createOffre = createAsyncThunk(
@@ -28,7 +29,13 @@ export const offreSlice = createSlice({
     name: 'offres',
     initialState,
     reducers: {
-
+        getOffreById: (state, action) => {
+            console.log(action);
+            for (let item of state.offres) {
+                if (item._id === action.payload.id)
+                    state.singleoffre = item
+            }
+        }
     },
 
     extraReducers: (builder) => {
@@ -69,11 +76,13 @@ export const offreSlice = createSlice({
     },
 });
 
-export const { } = offreSlice.actions;
+export const { getOffreById } = offreSlice.actions;
 
 
 export const selectcreateoffrestatus = (state) => state.offres.createoffrestatus;
 export const selectofres = (state) => state.offres.offres;
+export const selectsingleoffre = (state) => state.offres.singleoffre;
+
 
 
 export default offreSlice.reducer;

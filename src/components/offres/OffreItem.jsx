@@ -4,19 +4,31 @@ import { BiMap } from 'react-icons/bi'
 import { FaFileContract } from 'react-icons/fa'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import moment from 'moment'
+import { useParams, useRouteMatch } from 'react-router'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { getOffreById } from '../../features/offres/offreEmploiSlice'
 
 const OffreItem = ({ offre/* props offre itam data from table map as object 0 */ }) => {
+
+    const dispatch = useDispatch()
+
+    let { url } = useRouteMatch();
+
     return (
         <div className='offreitem'  >
-            <div className="offrehead">
+            <Link to={`${url}/details`}>
+                {/*  */}
+                <div onClick={() => dispatch(getOffreById({  id : offre._id }))} style={{ cursor: 'pointer' }} className="offrehead">
 
-                <img src={'http://localhost:5000/getfile/' + offre.entreprise.avatar} alt="" />
-                <div className="details">
-                    <span>{offre.poste}</span>
-                    <h6>{offre.entreprise.nom}</h6>
+                    <img src={'http://localhost:5000/getfile/' + offre.entreprise.avatar} alt="" />
+                    <div className="details">
+                        <span>{offre.poste}</span>
+                        <h6>{offre.entreprise.nom}</h6>
+                    </div>
+
                 </div>
-
-            </div>
+            </Link>
             <hr />
             <div className="offrebody">
                 {offre.description}

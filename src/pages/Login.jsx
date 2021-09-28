@@ -27,8 +27,10 @@ const Login = (props) => {
     }
 
     useEffect(() => {
+    
         if (status.status === 'success') {
-            history.push('/entreprise')
+            console.log("roleeeeee",user.__t);
+            history.push(`/${user.__t}`)
              /*    console.log();
             if (user.__t === 'entreprise') {
                 console.log('yessss');

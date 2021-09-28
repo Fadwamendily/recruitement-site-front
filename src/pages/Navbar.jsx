@@ -6,7 +6,11 @@ import { selectisauth } from '../features/users/userSlice'
 
 const Navbar = () => {
 
+function Refresh(){
+    localStorage.clear()
+    window.location.reload(false)
 
+}
     /*     const isauth = useSelector(selectisauth)
      */
     const [isauth, setisauth] = useState(localStorage.getItem('isauth'))
@@ -27,7 +31,7 @@ const Navbar = () => {
                             <li><a className="nav-link scrollto" href="#contact">Contact</a></li>
 
                             {!isauth && <li><Link to='/login'><button className="login-nav-item" >Login</button></Link></li>}
-                            {isauth && <li><button onClick={() => localStorage.clear()} className="login-nav-item" >logout</button></li>}
+                            {isauth && <li><button onClick={() => Refresh()} className="login-nav-item" >logout</button></li>}
                         </ul>
 
                     </nav>{/* .navbar */}

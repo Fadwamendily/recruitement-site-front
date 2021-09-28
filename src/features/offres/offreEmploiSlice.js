@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { CreateOffreEmploi, GetALl } from './offreEmploiAPI';
+import { CreateOffreEmploi, GetALl, GetByID } from './offreEmploiAPI';
 
 const initialState = {
     createoffrestatus: '',
@@ -24,6 +24,16 @@ export const getaaloffres = createAsyncThunk(
         return response.data;
     }
 );
+
+export const getoffrebyid = createAsyncThunk(
+    'offre/byid',
+    async (id) => {
+        const response = await GetByID(id);
+        // The value we return becomes the `fulfilled` action payload
+        return response.data;
+    }
+);
+
 
 export const offreSlice = createSlice({
     name: 'offres',
@@ -71,6 +81,17 @@ export const offreSlice = createSlice({
                 state.offres = action.payload.data
             })
             .addCase(getaaloffres.rejected, (state, action) => {
+
+            })
+            .addCase(getoffrebyid.pending, (state) => {
+
+            })
+            .addCase(getoffrebyid.fulfilled, (state, action) => {
+
+                console.log(action.payload);
+                state.singleoffre = action.payload.data
+            })
+            .addCase(getoffrebyid.rejected, (state, action) => {
 
             });
     },

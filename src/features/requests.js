@@ -6,4 +6,5 @@ export const requests = {
     userapi: serverurl + '/users',
     offreEmploiapi: serverurl + '/offreEmploi',
     categoriesapi: serverurl + '/categorie',
+    commentapi:serverurl+'/commentaire'
 }

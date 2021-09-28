@@ -15,11 +15,13 @@ const OffreItem = ({ offre/* props offre itam data from table map as object 0 */
 
     let { url } = useRouteMatch();
 
+    
+
     return (
         <div className='offreitem'  >
             <Link to={`${url}/details`}>
                 {/*  */}
-                <div onClick={() => dispatch(getOffreById({  id : offre._id }))} style={{ cursor: 'pointer' }} className="offrehead">
+                <div onClick={() =>{ dispatch(getOffreById({  id : offre._id })) ; localStorage.setItem('singleoffreid' , offre._id)}} style={{ cursor: 'pointer' }} className="offrehead">
 
                     <img src={'http://localhost:5000/getfile/' + offre.entreprise.avatar} alt="" />
                     <div className="details">

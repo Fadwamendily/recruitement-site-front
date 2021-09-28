@@ -21,3 +21,13 @@ export function GetALl() {
             return err
         })
 }
+
+export function GetByID(id) {
+    return axios.get(requests.offreEmploiapi + '/getoffreEmploibyid/' + id)
+        .then(res => {
+            return res
+        })
+        .catch(err => {
+            return err
+        })
+}

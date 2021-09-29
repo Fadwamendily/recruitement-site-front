@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getaaloffres, selectofres } from '../../features/offres/offreEmploiSlice'
 import OffreItem from './OffreItem'
 import SinglePage from './SinglePage'
+import Filter from './filters/Filter'
 
 const Offres = () => {
 
@@ -52,7 +53,11 @@ const Offres = () => {
                             </Route>
                         </Switch>
                     </Col>
-                    <Col span={6} >filter</Col>
+                    <Col span={6} >
+
+                        <Filter />
+
+                    </Col>
 
                 </Row>
 
@@ -75,7 +80,7 @@ function Topic() {
 
     switch (topicId) {
         case 'create': return <Create />; break;
-        case 'details' : return <SinglePage />; break;
+        case 'details': return <SinglePage />; break;
 
         default: return <p>home oofres</p>; break;
     }

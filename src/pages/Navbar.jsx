@@ -3,14 +3,16 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import '../assets/css/Navbar.css'
 import { selectisauth } from '../features/users/userSlice'
+import { useHistory } from 'react-router'
 
 const Navbar = () => {
 
-function Refresh(){
-    localStorage.clear()
-    window.location.reload(false)
-
-}
+    const history = useHistory()
+    function Refresh() {
+        localStorage.clear()
+        history.push('/login')
+        window.location.reload()
+    }
     /*     const isauth = useSelector(selectisauth)
      */
     const [isauth, setisauth] = useState(localStorage.getItem('isauth'))

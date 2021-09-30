@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Login, updateUser, uploadAvatar } from './userAPI';
+import { Login, sendMail, updateUser, uploadAvatar } from './userAPI';
 
 const initialState = {
     loginstatus: {
@@ -39,6 +39,15 @@ export const updateuser=createAsyncThunk(
     'users/updateUser',
     async (data) => {
         const response = await updateUser(data);
+        // The value we return becomes the `fulfilled` action payload
+        return response;
+    } 
+)
+//sendMAil
+export const sendmail=createAsyncThunk(
+    'users/sendmail',
+    async (data) => {
+        const response = await sendMail(data);
         // The value we return becomes the `fulfilled` action payload
         return response;
     } 
@@ -112,6 +121,18 @@ export const userSlice = createSlice({
 
             })
             .addCase(updateuser.rejected, (state, action) => {
+                state.updatestatus = 'failure'
+
+            })
+            .addCase(sendmail.pending, (state, action) => {
+                state.updatestatus = 'loading'
+            })
+            .addCase(sendmail.fulfilled, (state, action) => {
+                console.log(action.payload);
+                state.updatestatus = 'success'
+
+            })
+            .addCase(sendmail.rejected, (state, action) => {
                 state.updatestatus = 'failure'
 
             })

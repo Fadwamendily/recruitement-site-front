@@ -8,6 +8,7 @@ const Sider = (props) => {
     return (
         <div className='offres-sider'  >
             <MenuSiderItem roles={['entreprise']} {...props} url='/create' icon={AiFillPlusSquare} text='Nouvelle offre' />
+            <MenuSiderItem roles={['entreprise']} {...props} url='/mesoffres' icon={AiFillPlusSquare} text='Mes offres' />
         </div>
     )
 }

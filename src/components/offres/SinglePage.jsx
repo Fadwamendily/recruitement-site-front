@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Row, Col } from 'antd';
+import { Row, Col,Modal } from 'antd';
 import { useSelector } from 'react-redux';
 import { getoffrebyid, selectsingleoffre } from '../../features/offres/offreEmploiSlice';
 import moment from 'moment'
@@ -9,8 +9,16 @@ import './single.css'
 import { selectautheduser, selectuser } from '../../features/users/userSlice';
 import { useDispatch } from 'react-redux';
 import { creatcomment, selectcreatecomment } from '../../features/comments/commentSlice';
+import { Upload, message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+
 
 const SinglePage = () => {
+
+    
+    const [visible, setVisible] = React.useState(false);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
+  const [modalText, setModalText] = React.useState('Import your files');
     const user = useSelector(selectuser)
 
     const offre = useSelector(selectsingleoffre)
@@ -20,6 +28,9 @@ const SinglePage = () => {
 
     const createcommstatus = useSelector(selectcreatecomment)
 
+
+
+    
     useEffect(() => {
         dispatch(getoffrebyid(offre._id))
     }, [createcommstatus])
@@ -55,6 +66,40 @@ const SinglePage = () => {
 
     }
 
+    const showModal = () => {
+        setVisible(true);
+      };
+    
+      const handleOk = () => {
+        setModalText('The modal will be closed after two seconds');
+        setConfirmLoading(true);
+        setTimeout(() => {
+          setVisible(false);
+          setConfirmLoading(false);
+        }, 2000);
+      };
+    
+      const handleCancel = () => {
+        console.log('Clicked cancel button');
+        setVisible(false);}
+
+        const props = {
+            name: 'file',
+            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+            headers: {
+              authorization: 'authorization-text',
+            },
+            onChange(info) {
+              if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+              }
+              if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`);
+              } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+              }
+            },
+          };
 
     return (
         <div>
@@ -72,7 +117,7 @@ const SinglePage = () => {
                 </div>
 
                 <div>
-                    {(user.__t === 'condidat') && <button className="btn btn-primary" >postuler</button>}
+                    {(user.__t === 'condidat') && <button className="btn btn-primary" onClick={showModal} >postuler</button>}
 
                     {(user.__t === 'entreprise') && <button className="btn btn-primary">Update</button>}
                 </div>
@@ -133,7 +178,20 @@ const SinglePage = () => {
                 }
 
             </div>
+            <Modal
+        title={offre.poste}
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p>{modalText}</p>
+        <Upload {...props}>
+  <span>CV:</span>  <Button icon={<UploadOutlined />}>Click to Upload</Button><br/>
 
+  <span>LM:</span>  <Button icon={<UploadOutlined />}>Click to Upload</Button>
+  </Upload>
+      </Modal>
         </div>
 
     )

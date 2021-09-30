@@ -11,14 +11,8 @@ const FIlterItem = ({ text, type }) => {
         console.log(e);
         console.log(`checked = ${e.target.checked}`);
 
-        if (e.target.checked) {
+        dispatch(filteroffres({ type: type, text: e.target.value, checked: e.target.checked }))
 
-            dispatch(filteroffres({ type: type, text: e.target.value }))
-        }
-        else {
-            dispatch(refreshfilterOptions({ type: type, text: e.target.text }))
-            dispatch(filteroffres({ type: type}))
-        }
     }
 
     return (

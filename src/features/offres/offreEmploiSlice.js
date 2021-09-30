@@ -58,24 +58,87 @@ export const offreSlice = createSlice({
 
             const { locations, contrats, categories } = state.filterOptions
 
+            const { type, text, checked } = action.payload
+
             switch (action.payload.type) {
-                case 'location': action.payload.text && state.filterOptions.locations.push(action.payload.text); break;
-                case 'category': action.payload.text && state.filterOptions.categories.push(action.payload.text); break;
-                case 'Contrat': action.payload.text && state.filterOptions.contrats.push(action.payload.text); break;
-                default: break;
+                case 'location':
+
+                    if (checked) {
+                        locations.push(action.payload.text)
+                    } else {
+                        const index = locations.indexOf(text);
+                        if (index !== -1) locations.splice(index, 1);
+                    }
+                    ; break;
+                case 'category':
+
+                    if (checked) {
+                        categories.push(action.payload.text)
+                    } else {
+                        const index = categories.indexOf(text);
+                        if (index !== -1) categories.splice(index, 1);
+                    }
+                    ; break;
+                case 'Contrat':
+
+                    if (checked) {
+                        contrats.push(action.payload.text)
+                    } else {
+                        const index = contrats.indexOf(text);
+                        if (index !== -1) contrats.splice(index, 1);
+                    }
+                    ; break;
+
             }
 
             if (locations.length === 0 && contrats.length === 0 && categories.length === 0) {
                 state.filtredoffres = state.offres
             }
             else {
+
                 state.filtredoffres = []
+
+                for (let location of state.filterOptions.locations) {
+
+                    const data = [...state.offres]
+
+                    const arr = data.filter(o => o.lieu === location)
+
+                    state.filtredoffres = state.filtredoffres.concat(arr)
+
+                }
+
+                for (let category of state.filterOptions.categories) {
+
+                    const data = [...state.offres]
+
+                    const arr = data.filter(o => o.nom_categorie === category)
+
+                    state.filtredoffres = state.filtredoffres.concat(arr)
+
+
+
+                }
+
+                for (let contrat of state.filterOptions.contrats) {
+
+                    const data = [...state.offres]
+
+                    const arr = data.filter(o => o.type_contrat === contrat)
+
+                    state.filtredoffres = state.filtredoffres.concat(arr)
+
+
+                }
+
+
+
             }
         }
 
         ,
 
-        refreshfilterOptions: (state, action) => {
+        /* refreshfilterOptions: (state, action) => {
             switch (action.payload.type) {
                 case 'location':
                     let pos1
@@ -111,7 +174,7 @@ export const offreSlice = createSlice({
 
                 default: break;
             }
-        }
+        } */
     },
 
     extraReducers: (builder) => {

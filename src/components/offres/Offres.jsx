@@ -8,6 +8,7 @@ import Create from './Create'
 import { useDispatch, useSelector } from 'react-redux'
 import { getaaloffres, selectofres } from '../../features/offres/offreEmploiSlice'
 import OffreItem from './OffreItem'
+import MesOffres from './MesOffres'
 import SinglePage from './SinglePage'
 import Filter from './filters/Filter'
 
@@ -80,6 +81,7 @@ function Topic() {
 
     switch (topicId) {
         case 'create': return <Create />; break;
+        case 'mesoffres': return <MesOffres />; break;
         case 'details': return <SinglePage />; break;
 
         default: return <p>home oofres</p>; break;

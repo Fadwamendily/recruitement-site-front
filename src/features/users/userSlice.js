@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Login, sendMail, updateUser, uploadAvatar } from './userAPI';
-
+import AuthService from '../../pages/AuthService';
+import {  sendMail, updateUser, uploadAvatar } from './userAPI';
 const initialState = {
     loginstatus: {
         iserror: false,
@@ -19,7 +19,7 @@ const initialState = {
 export const login = createAsyncThunk(
     'users/login',
     async (data) => {
-        const response = await Login(data);
+        const response = await AuthService (data);
         // The value we return becomes the `fulfilled` action payload
         return response;
     }
